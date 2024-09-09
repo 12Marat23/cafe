@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="header_section header_bg">
+    {% include "inc/_header.html"%}
+</div>
+<!-- contact section start -->
+<div class="contact_section layout_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 class="contact_taital">Get In Touch</h1>
+                <div class="bulit_icon"><img src="{% static 'images/bulit-icon.png' %}"></div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="contact_section_2">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="mail_section_1">
+                        {% if messages %}
+                        <div class="container mt-3">
+                            {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ form.non_field_errors }}
+                            <div class="form-group">
+                                {{ form.name }}
+                                {{ form.name.errors }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.email }}
+                                {{ form.email.errors }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.phone }}
+                                {{ form.phone.errors }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.message }}
+                                {{ form.message.errors }}
+                            </div>
+                            <div class="send_bt">
+                                <button type="submit"><a>SEND</a></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="map_main">
+                    <div class="map-responsive">
+                        <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&amp;q=Arbat+Street+Moscow+Russia"
+                                width="250" height="500" frameborder="0" style="border:0; width: 100%;"
+                                allowfullscreen=""></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- contact section end -->
+{% endblock %}
