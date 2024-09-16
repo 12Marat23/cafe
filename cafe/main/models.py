@@ -13,6 +13,9 @@ class Coffees(models.Model):
     def __str__(self):
         return self.title
 
+    def short_description(self):
+        return self.content[:100]+'...'
+
     class Meta:
         verbose_name = 'Статья'
         verbose_name_plural = 'Статьи'
