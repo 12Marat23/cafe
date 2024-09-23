@@ -3,7 +3,7 @@
 {% block title %} Home {% endblock %}
 {% block content %}
 <div class="header_section">
-  {% include 'inc/_header.html' %}
+    {% include 'inc/_header.html' %}
     <!-- banner section start -->
     <div class="banner_section layout_padding">
         <div class="container">
@@ -103,39 +103,17 @@
             </div>
         </div>
         <div class="client_section_2">
+            {% for comment in comments %}
             <div class="client_taital_main">
                 <div class="client_left">
-                    <div class="client_img"><img src="{% static 'images/client-img1.png' %}"></div>
+                    <div class="client_img"><img src="{{ comment.image.url}}"></div>
                 </div>
                 <div class="client_right">
-                    <h3 class="moark_text">Joy Moark</h3>
-                    <p class="client_text">now use Lorem Ipsum as their default model text, and a search for 'lorem
-                        ipsum' will uncover many web sites still in their infancynow use Lorem Ipsum as their default
-                        model text, </p>
+                    <h3 class="moark_text">{{ comment.name }}</h3>
+                    <p class="client_text">{{ comment.comment }}</p>
                 </div>
             </div>
-            <div class="client_taital_main">
-                <div class="client_left">
-                    <div class="client_img"><img src="{% static 'images/client-img2.png' %}"></div>
-                </div>
-                <div class="client_right">
-                    <h3 class="moark_text">Mihacal</h3>
-                    <p class="client_text">now use Lorem Ipsum as their default model text, and a search for 'lorem
-                        ipsum' will uncover many web sites still in their infancynow use Lorem Ipsum as their default
-                        model text, </p>
-                </div>
-            </div>
-            <div class="client_taital_main">
-                <div class="client_left">
-                    <div class="client_img"><img src="{% static 'images/client-img3.png' %}"></div>
-                </div>
-                <div class="client_right">
-                    <h3 class="moark_text">Uliya den</h3>
-                    <p class="client_text">now use Lorem Ipsum as their default model text, and a search for 'lorem
-                        ipsum' will uncover many web sites still in their infancynow use Lorem Ipsum as their default
-                        model text, </p>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </div>

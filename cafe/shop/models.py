@@ -12,7 +12,8 @@ class Shop(models.Model):
     description = models.TextField(verbose_name='Описание')
     image = models.ImageField(upload_to='products/%Y/%m/%d', verbose_name='Фото', blank=True)  # Фото товара
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена')  # Стоимость товара
-    discount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Скидка', blank=True)  # Скидка товара
+    discount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Скидка', blank=True,
+                                   null=True)  # Скидка товара
 
     def __str__(self):
         """
@@ -33,6 +34,6 @@ class Shop(models.Model):
         return reverse('product', kwargs={'slug': self.slug})
 
     class Meta:
-        verbose_name = 'Статья'
-        verbose_name_plural = 'Статьи'
+        verbose_name = 'Продукт'
+        verbose_name_plural = 'Продукты'
         ordering = ['product']

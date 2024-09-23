@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views import View
 from django.views.generic import ListView, TemplateView
-from .models import Coffees, ContactMessage
+from .models import *
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from .forms import *
+import random
 
 
 # Create your views here.
@@ -66,21 +68,45 @@ class CoffeesListView(BaseCoffeeView, ListView):
         return context
 
 
-class IndexView(BaseCoffeeView, TemplateView):
+class IndexView(BaseCoffeeView, TemplateView, View):
     template_name = 'main/index.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Home'
+
+        comments = Comment.objects.all()
+        random_comments = random.sample(list(comments), min(3, comments.count()))
+        context['comments'] = random_comments
         return context
+
+    # def get(self, request):
+    #     comments = Comment.objects.all()
+    #     random_comment = random.sample(list(comments), min(3, comments.count()))
+    #     return render(request, 'main/index.html', {'comments': random_comment})
 
 
 def about(request):
     return render(request, 'main/about.html', )
 
 
-@csrf_exempt
 def contact_view(request):
+    """
+    Обрабатывает запросы на страницу контактов.
+    Если метод запроса - POST, функция проверяет и обрабатывает данные формы обратной связи.
+    В случае успешного завершения валидации данные сохраняются в базе данных, и пользователь
+    получает сообщение об успешной отправке. В случае ошибки отображается сообщение об ошибке.
+    Если метод запроса - GET, функция отображает пустую форму для ввода данных.
+    Параметры:
+    ----------
+    request : HttpRequest
+        Объект запроса, содержащий данные о методе запроса и данные формы.
+
+    Возвращает:
+    ----------
+    HttpResponse
+        Ответ с отрендеренной страницей контактов, содержащей форму для отправки сообщений.
+    """
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
